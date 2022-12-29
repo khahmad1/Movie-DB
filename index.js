@@ -67,6 +67,15 @@ app.get('/movies/read/by-title', (req, res) => {
   });
   res.json({ status: 200, data: ByTitle });
 });
+app.get('/movies/get/id/:id', (req, res) => {
+  var id = parseInt(req.params.id);
+  var movie = movies[id - 1];
+  if (movie) {
+      res.status(200).json({ status: 200, data: movie })
+  } else {
+      res.status(404).json({ status: 404, error: true, message: `the movie ${id} does not exist` })
+  }
+});
 
  app.listen(3000, () => {
     console.log('Server on port 3000');
