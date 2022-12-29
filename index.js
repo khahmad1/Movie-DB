@@ -76,6 +76,22 @@ app.get('/movies/get/id/:id', (req, res) => {
       res.status(404).json({ status: 404, error: true, message: `the movie ${id} does not exist` })
   }
 });
+app.get('/movies/add', (req, res) => {
+  var title = req.query.title;
+  var year = req.query.year;
+  var rating = req.query.rating;
+
+  if (!title || !year || year.length !== 4 || isNaN(year)) {
+    res.status(403).json({status: 403, error: true, message: 'you cannot create a movie without providing a title and a year'});
+  } else {
+    if (!rating) {
+      rating = 4;
+    }
+    var newMovie = {title, year, rating};
+    movies.push(newMovie);
+    res.json({status: 200, data: movies});
+  }
+});
 
  app.listen(3000, () => {
     console.log('Server on port 3000');
