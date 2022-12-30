@@ -92,6 +92,15 @@ app.get('/movies/add', (req, res) => {
     res.json({status: 200, data: movies});
   }
 });
+app.get("/movies/delete/:id", (req, res) => {
+  var id = parseInt(req.params.id)
+  if (id > movies.length) {
+      res.status(404).json({ status: 404, error: true, message: `the movie ${id} does not exist` })
+  } else {
+      movies.splice(id, 1)
+      res.status(200).json({ status: 200, data: movies })
+  }
+})
 
  app.listen(3000, () => {
     console.log('Server on port 3000');
